@@ -8,26 +8,21 @@ namespace TP
 {
     class Program
     {
-        enum PolitiqueNonPedophile : Byte {
+        enum sdsf : Byte {
             } 
 
 
 
         static void Main(string[] args)
         {
-           
-            Console.OutputEncoding = Encoding.Unicode;
-            // Pour les euros €€€€€€€€€€€€
-            bool OK = int.TryParse(Console.ReadLine(),out int x);
 
-            if (OK)
-            {
-                Console.Write(x);
-            }
-            else
-            {
-                Console.WriteLine("Pas de chance lol");
-            }
+            ElementaryOperations.BasicOperation(12, 5, '+');
+            ElementaryOperations.IntegerDivision(12, 5);
+            ElementaryOperations.Pow(2, 3);
+            SpeakingClock.GoodDay(15);
+            Pyramid.PyramidConstruction(5, false);
+            Console.WriteLine(Factorial.Factorial_(2));
+            Console.WriteLine(Factorial.FactorialRecursive(5));
 
             Console.ReadKey();
         }

@@ -4,20 +4,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Serie_I
+namespace TP
 {
     public static class Factorial
     {
         public static int Factorial_(int n)
         {
-            //TODO
-            return -1;
+            int RetVal = 1;
+
+            if(n > 1)
+            {
+                for(int i = 2;  i <= n;  i++)
+                {
+                    RetVal *= i;
+                }
+            }
+           
+            return RetVal;
         }
 
         public static int FactorialRecursive(int n)
         {
-            //TODO
-            return -1;
+             if ( n <= 1)
+            {
+                return 1;
+            }
+            return n * FactorialRecursive(n - 1);
+            
         }
     }
 }
