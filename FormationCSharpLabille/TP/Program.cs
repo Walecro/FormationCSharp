@@ -8,8 +8,28 @@ namespace TP
 {
     class Program
     {
+        enum PolitiqueNonPedophile : Byte {
+            } 
+
+
+
         static void Main(string[] args)
         {
+           
+            Console.OutputEncoding = Encoding.Unicode;
+            // Pour les euros €€€€€€€€€€€€
+            bool OK = int.TryParse(Console.ReadLine(),out int x);
+
+            if (OK)
+            {
+                Console.Write(x);
+            }
+            else
+            {
+                Console.WriteLine("Pas de chance lol");
+            }
+
+            Console.ReadKey();
         }
     }
 }
