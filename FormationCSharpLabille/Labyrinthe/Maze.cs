@@ -56,15 +56,22 @@ namespace Exercices.Labyrinthe
         {
             _maze[i, j].Walls[w] = true;
 
+
             switch (w)
             {
                 // NORD 
                 case 0:
-                    _maze[i + 1, j].Walls[1] = true;
+                    if(i - 1 >= 0)
+                    {
+                        _maze[i - 1, j].Walls[1] = true;
+                    }
                     break;
                 // SUD 
                 case 1:
-
+                    if (i + 1 < _maze.Length)
+                    {
+                        _maze[i + 1, j].Walls[0] = true;
+                    }
                     break;
                 // OUEST 
                 case 2:
