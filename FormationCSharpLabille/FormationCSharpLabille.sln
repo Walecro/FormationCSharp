@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.37206.5
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TP", "TP\TP.csproj", "{E0DF9B3C-281A-4687-ADB2-B8BF3D5BA575}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Labyrinthe", "Labyrinthe\Labyrinthe\Labyrinthe.csproj", "{7AC28775-8D12-4F09-8134-2A5F0706800B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Labyrinthe", "Labyrinthe\Labyrinthe.csproj", "{7AC28775-8D12-4F09-8134-2A5F0706800B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

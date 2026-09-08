@@ -38,22 +38,48 @@ namespace Exercices.Labyrinthe
 
         public bool IsOpen(int i, int j, int w)
         {
-            return false;
+            return  _maze[i, j].Walls[w];
         }
 
         public bool IsMazeStart(int i, int j)
         {
-            return false;
+            return _maze[i,j].state == Cell.State.BEGIN;
         }
 
         public bool IsMazeEnd(int i, int j)
         {
-            return false;
+            return _maze[i, j].state == Cell.State.END;
+
         }
 
         public void Open(int i, int j, int w)
         {
-			return;
+            _maze[i, j].Walls[w] = true;
+
+            switch (w)
+            {
+                // NORD 
+                case 0:
+                    _maze[i + 1, j].Walls[1] = true;
+                    break;
+                // SUD 
+                case 1:
+
+                    break;
+                // OUEST 
+                case 2:
+
+                    break;
+                // EST 
+                case 3:
+
+                    break;
+
+                default:
+
+                    break;
+            }
+
         }
 
         private List<KeyValuePair<int, int>> CloseNeighbors(int i, int j)
