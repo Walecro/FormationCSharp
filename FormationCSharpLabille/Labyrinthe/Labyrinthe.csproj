@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E0DF9B3C-281A-4687-ADB2-B8BF3D5BA575}</ProjectGuid>
+    <ProjectGuid>{7AC28775-8D12-4F09-8134-2A5F0706800B}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>TP</RootNamespace>
-    <AssemblyName>TP</AssemblyName>
+    <RootNamespace>Labyrinthe</RootNamespace>
+    <AssemblyName>Labyrinthe</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,18 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ex1_ElementaryOperations.cs" />
-    <Compile Include="Ex1_TasksTables.cs" />
-    <Compile Include="Ex3_Eratos.cs" />
-    <Compile Include="Ex2bis_Matrice.cs" />
-    <Compile Include="Ex2_Morpion.cs" />
-    <Compile Include="Ex2_SpeakingClock.cs" />
-    <Compile Include="Ex3_Pyramid.cs" />
-    <Compile Include="Ex3_Search.cs" />
-    <Compile Include="Ex4_QCM.cs" />
-    <Compile Include="Ex6_Euclide.cs" />
-    <Compile Include="Ex5_Prime.cs" />
-    <Compile Include="Ex4_Factorial.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
