@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Serie2;
+using Serie3;
 
 namespace TP
 {
@@ -15,7 +16,8 @@ namespace TP
             //Test_SerieI();
             //Test_SerieII();
             //Test_SerieIAnnexe();
-            Test_SerieIIAnnexe();
+            //Test_SerieIIAnnexe();
+            Test_SerieIII();
 
             Console.ReadKey();
         }
@@ -128,5 +130,42 @@ namespace TP
 
             
         }
+
+        static void Test_SerieIII()
+        {
+            /*string s = "Je prépare la lapidation d'Emmanuel Macron le 27 Septembre 2026 place Jean Luc Mélenchon";
+            string[] ps = { "Mélenchon", "Macron", "lapidation" };
+            string retS;
+
+            retS = AdministrativeTasks.EliminateSeditiousThoughts(s, ps);
+            Console.WriteLine(retS);*/
+            /*
+            string s =  "M.   Nikita       Kryukov      29";
+            string s2 = "Mr   koook        kffe          1";
+
+            Console.WriteLine(AdministrativeTasks.ControlFormat(s));
+            Console.WriteLine(AdministrativeTasks.ControlFormat(s2));
+            /*
+            string s = "1987-18-87 Mort de Claude François, tragique vraiment, mais le 1987-18-88 la naissance de Claudine Françoise, un signe peut être?";
+            Console.WriteLine(AdministrativeTasks.ChangeDate(s));*/
+            /*
+            Cesar c = new Cesar();
+            string s = "ATest Undeux";
+            
+            string encoded = c.CesarCode(s);
+            Console.WriteLine(encoded);
+            Console.WriteLine(c.DecryptCesarCode(encoded)); 
+
+            string encoded = c.GeneralCesarCode(s, 7);
+            Console.WriteLine(encoded);
+
+            Console.WriteLine(c.GeneralDecryptCesarCode(encoded, 7));*/
+
+            Morse m = new Morse();
+
+            string s = m.MorseTranslation($"{Morse.Ti}.{Morse.Taah}{Morse.PointLetter}{Morse.Taah}.{Morse.Taah}.{Morse.Ti}.{Morse.Ti}.{Morse.Ti}{Morse.PointWord}{Morse.Ti}.{Morse.Taah}{Morse.PointLetter}{Morse.Taah}.{Morse.Ti}.{Morse.Ti}.{Morse.Ti}");
+            Console.WriteLine(s);
+        }
+
     }
 }
