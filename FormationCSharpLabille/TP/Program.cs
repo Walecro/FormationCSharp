@@ -165,6 +165,10 @@ namespace TP
 
             string s = m.MorseTranslation($"{Morse.Ti}.{Morse.Taah}{Morse.PointLetter}{Morse.Taah}.{Morse.Taah}.{Morse.Ti}.{Morse.Ti}.{Morse.Ti}{Morse.PointWord}{Morse.Ti}.{Morse.Taah}{Morse.PointLetter}{Morse.Taah}.{Morse.Ti}.{Morse.Ti}.{Morse.Ti}");
             Console.WriteLine(s);
+
+            string sbad = $"...{Morse.Ti}.{Morse.Taah}{Morse.PointLetter}{Morse.Taah}.{Morse.Taah}.{Morse.Ti}.{Morse.Ti}.{Morse.Ti}{Morse.PointWord}{Morse.Ti}.{Morse.Taah}{Morse.PointLetter}{Morse.Taah}.{Morse.Ti}.{Morse.Ti}.{Morse.Ti}...";
+            sbad = m.EfficientMorseTranslation(sbad);
+            Console.WriteLine(sbad);
         }
 
     }

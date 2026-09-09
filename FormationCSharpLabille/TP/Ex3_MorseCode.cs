@@ -60,7 +60,9 @@ namespace Serie3
             //TODO
             return code.Split(new string[] { PointWord }, StringSplitOptions.RemoveEmptyEntries).Length;
         }
-
+        /// <summary>
+        /// Fonction de traduction du Morse vers le Français
+        /// </summary>
         public string MorseTranslation(string code)
         {
             string[] words = code.Split(new string[] { PointWord  }, WordsCount(code),  StringSplitOptions.RemoveEmptyEntries) ;
@@ -87,13 +89,32 @@ namespace Serie3
             return ret.ToString();
         }
 
+        /// <summary>
+        /// Fonction de nettoyage avant envoi dans MorseTranslation
+        /// </summary>
         public string EfficientMorseTranslation(string code)
         {
             string code_clean = code;
 
+            // Nettoyage à droite et à gauche des points inutiles
+            code_clean = code.Trim('.');
 
-            
-            return MorseTranslation(code_clean);
+            int cpt_p = 0;
+            /*
+            for(int i = 0; i < code.Length; i++)
+            {
+                if(code[i] == ".")
+                {
+                    cpt_p++;
+                }
+                else
+                {
+
+                }
+            }
+            */
+            //return MorseTranslation(
+                return code_clean; //);
         }
 
         public string MorseEncryption(string sentence)
