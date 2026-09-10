@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Serie2;
 using Serie3;
+using Serie4;
 
 namespace TP
 {
@@ -17,7 +18,8 @@ namespace TP
             //Test_SerieII();
             //Test_SerieIAnnexe();
             //Test_SerieIIAnnexe();
-            Test_SerieIII();
+            //Test_SerieIII();
+            Test_SerieIV();
 
             Console.ReadKey();
         }
@@ -162,14 +164,35 @@ namespace TP
             Console.WriteLine(c.GeneralDecryptCesarCode(encoded, 7));*/
 
             Morse m = new Morse();
-
+            /*
             string s = m.MorseTranslation($"{Morse.Ti}.{Morse.Taah}{Morse.PointLetter}{Morse.Taah}.{Morse.Taah}.{Morse.Ti}.{Morse.Ti}.{Morse.Ti}{Morse.PointWord}{Morse.Ti}.{Morse.Taah}{Morse.PointLetter}{Morse.Taah}.{Morse.Ti}.{Morse.Ti}.{Morse.Ti}");
             Console.WriteLine(s);
 
-            string sbad = $"...{Morse.Ti}.{Morse.Taah}{Morse.PointLetter}{Morse.Taah}.{Morse.Taah}.{Morse.Ti}.{Morse.Ti}.{Morse.Ti}{Morse.PointWord}{Morse.Ti}.{Morse.Taah}{Morse.PointLetter}{Morse.Taah}.{Morse.Ti}.{Morse.Ti}.{Morse.Ti}...";
+            string sbad = $"...{Morse.Ti}.{Morse.Taah}{Morse.PointLetter}" +
+                $"{Morse.Taah}.{Morse.Taah}..{Morse.Ti}.{Morse.Ti}..{Morse.Ti}{Morse.PointWord}..." +
+                $"{Morse.Ti}.{Morse.Taah}{Morse.PointLetter}." +
+                $"{Morse.Taah}.{Morse.Ti}.{Morse.Ti}.{Morse.Ti}...";
             sbad = m.EfficientMorseTranslation(sbad);
             Console.WriteLine(sbad);
+
+            */
+            string encrypt = m.MorseEncryption("HAHAHA");
+            Console.WriteLine(encrypt);
+
+            string decrypt = m.MorseTranslation(encrypt);
+            Console.WriteLine(decrypt);
         }
 
+        static void Test_SerieIV()
+        {
+            /*
+             string pathIn = @"C:\Users\Formation\source\repos\CSharpLabille\notes.csv";
+             string pathOut = @"C:\Users\Formation\source\repos\CSharpLabille\moyennes.csv";
+
+            ClassCouncil.SchoolMeans(pathIn, pathOut);*/
+
+            Serie4.Morpion.MorpionGame();
+
+        }
     }
 }

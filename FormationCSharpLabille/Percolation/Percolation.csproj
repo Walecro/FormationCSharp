@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E0DF9B3C-281A-4687-ADB2-B8BF3D5BA575}</ProjectGuid>
+    <ProjectGuid>{8A365A19-46A9-41CB-9251-B10D7EBA7453}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>TP</RootNamespace>
-    <AssemblyName>TP</AssemblyName>
+    <RootNamespace>Percolation</RootNamespace>
+    <AssemblyName>Percolation</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,23 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ex1_AdministrativeTasks.cs" />
-    <Compile Include="Ex1_ClassCouncil.cs" />
-    <Compile Include="Ex1_ElementaryOperations.cs" />
-    <Compile Include="Ex1_TasksTables.cs" />
-    <Compile Include="Ex2_CesarCode.cs" />
-    <Compile Include="Ex2_Morpion_Game.cs" />
-    <Compile Include="Ex3_Eratos.cs" />
-    <Compile Include="Ex2bis_Matrice.cs" />
-    <Compile Include="Ex2_Morpion.cs" />
-    <Compile Include="Ex2_SpeakingClock.cs" />
-    <Compile Include="Ex3_MorseCode.cs" />
-    <Compile Include="Ex3_Pyramid.cs" />
-    <Compile Include="Ex3_Search.cs" />
-    <Compile Include="Ex4_QCM.cs" />
-    <Compile Include="Ex6_Euclide.cs" />
-    <Compile Include="Ex5_Prime.cs" />
-    <Compile Include="Ex4_Factorial.cs" />
+    <Compile Include="Percolation.cs" />
+    <Compile Include="PercolationSimulation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -51,17 +51,16 @@ namespace Serie3
 
         public int LettersCount(string code)
         {
-            //TODO
             return code.Split(new string[] { PointLetter }, StringSplitOptions.RemoveEmptyEntries).Length;
         }
 
         public int WordsCount(string code)
         {
-            //TODO
             return code.Split(new string[] { PointWord }, StringSplitOptions.RemoveEmptyEntries).Length;
         }
+
         /// <summary>
-        /// Fonction de traduction du Morse vers le Français
+        /// Fonction de traduction du Morse vers l'alphabet latin
         /// </summary>
         public string MorseTranslation(string code)
         {
@@ -95,32 +94,65 @@ namespace Serie3
         public string EfficientMorseTranslation(string code)
         {
             string code_clean = code;
-
             // Nettoyage à droite et à gauche des points inutiles
             code_clean = code.Trim('.');
+            code_clean = code_clean.Replace("=....=", "=...=");
+            code_clean = code_clean.Replace("=..=", "=.=");
 
             int cpt_p = 0;
-            /*
-            for(int i = 0; i < code.Length; i++)
+            int start_index = 0;
+
+            // Clean up des chaines de + de 5 .
+            for (int i = 0; i < code_clean.Length; i++)
             {
-                if(code[i] == ".")
+                if (code_clean[i] == '.')
                 {
+                    if (cpt_p == 0)
+                    {
+                        start_index = i;
+                    }
                     cpt_p++;
                 }
                 else
                 {
+                    if (cpt_p > 5)
+                    {
+                        code_clean = code_clean.Remove(start_index + 5, cpt_p-5);
+                    }
+                    cpt_p = 0;
 
                 }
             }
-            */
-            //return MorseTranslation(
-                return code_clean; //);
+            
+            return MorseTranslation(code_clean);
         }
 
-        public string MorseEncryption(string sentence)
+        public string MorseEncryption(string sentence) 
         {
-            //TODO
-            return string.Empty;
+            Dictionary<char,string> Dico_Reverse = _alphabet.ToDictionary(x => x.Value, x => x.Key);
+            StringBuilder Retstrb = new StringBuilder();
+
+            foreach( char letter in sentence)
+            {
+                if(Char.IsLetter(letter))
+                {
+                    Retstrb.Append(Dico_Reverse[letter] + PointLetter );
+                    
+                }
+                else if (letter == ' ')
+                {
+                    Retstrb.Append(PointWord);
+                }
+                else
+                {
+                    throw new ArgumentException();
+                }
+            }
+
+
+            string Retstr = Retstrb.ToString();
+            //On retire les derniers ... ajouté 
+            return Retstr.Trim('.');
         }
     }
 }
