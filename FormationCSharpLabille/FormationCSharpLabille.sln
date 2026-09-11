@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Labyrinthe", "Labyrinthe\La
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Percolation", "Percolation\Percolation.csproj", "{8A365A19-46A9-41CB-9251-B10D7EBA7453}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjetArgent", "ProjetArgent\ProjetArgent.csproj", "{3E37119D-F709-4EEF-A424-E2C257465634}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{8A365A19-46A9-41CB-9251-B10D7EBA7453}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A365A19-46A9-41CB-9251-B10D7EBA7453}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A365A19-46A9-41CB-9251-B10D7EBA7453}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E37119D-F709-4EEF-A424-E2C257465634}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E37119D-F709-4EEF-A424-E2C257465634}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E37119D-F709-4EEF-A424-E2C257465634}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E37119D-F709-4EEF-A424-E2C257465634}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
