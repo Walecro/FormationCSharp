@@ -11,6 +11,7 @@ namespace ProjetArgent
         internal string _numcarte{ get; }
         internal List<Compte> _Liste_Cpt { get; set; }
 
+        //Liste des transactions validées sur la carte
         internal List<Transaction> _Historique { get; set; }
 
         internal double _plafond;
@@ -26,7 +27,6 @@ namespace ProjetArgent
 
         /// <summary>
         /// Méthode appelé par la carte d'un compte débiteur <br></br>
-        /// Ajoute la transaction actuelle à l'historique de la carte si vrai
         /// </summary>
         /// <param name="transaction">Possede l'dentifiant unique du compte débiteur ainsi que le montant</param>
         /// <returns>True si  le plafond est respecté, false sinon</returns>
@@ -41,7 +41,7 @@ namespace ProjetArgent
             {
                 //La transaction s'est elle produite dans les 10 derniers jours ? Si oui on la prend en compte
                 cmp = (t._horodatage - trans_past._horodatage).TotalDays;
-                if(cmp > -11.0 && cmp <= 0.0)
+                if(cmp < 10.0 && cmp >= 0)
                 {
                     cum += t._montant ;
                 }
@@ -49,7 +49,6 @@ namespace ProjetArgent
 
             if(t._montant + cum < _plafond)
             {
-                _Historique.Add(t);
                 ok = true;
             }
 

@@ -115,6 +115,11 @@ namespace ProjetArgent
                                 plafond_ok = false;
                             }
                         }
+                        else
+                        {
+                            plafond_ok = true;
+                            plafond = 500;
+                        }
 
                         if (card_ok && plafond_ok)
                         {
@@ -135,7 +140,7 @@ namespace ProjetArgent
             int readLen;
             string[] readin;
             // Datetime au format 13/09/2026 11:25:26
-            string format = "dd/MM/yyyy HH:mm:ss";
+            string format = "dd/MM/yyyy HH :mm :ss";
             System.Globalization.CultureInfo provider = System.Globalization.CultureInfo.InvariantCulture;
 
             List<int> liste_id = new List<int>();
@@ -180,6 +185,10 @@ namespace ProjetArgent
                         {
                             montant_ok = true;
                         }
+                        else
+                        {
+                            montant_ok = false;
+                        }
 
 
                         cpt_exp_ok = int.TryParse(readin[cpt + 3], out cpt_exp);
@@ -196,11 +205,8 @@ namespace ProjetArgent
                         if (!cpt_dest_ok || !(!(Liste_Compte.Where(compte => compte.ID == cpt_dest).Count() == 0) || cpt_dest == 0))
                         {
                             cpt_dest_ok = false;
-                        }/*
-                        Console.WriteLine(readin[cpt] + " " + readin[cpt+1] + " " + readin[cpt+2] + " " + readin[cpt+3] + " " + readin[cpt+4]);
-                        Console.WriteLine(id_ok + " " + horodatage_ok + " " + montant_ok + " " + cpt_exp_ok + " " + cpt_dest_ok);
-                        Console.WriteLine(id+ " " + horodatage + " " + montant + " " + cpt_exp + " " + cpt_dest);
-                        Console.WriteLine();*/
+                        }
+
                         // Si tous les paramètres sont bons, on instance
                         if (id_ok && horodatage_ok && montant_ok && cpt_exp_ok && cpt_dest_ok)
                         {

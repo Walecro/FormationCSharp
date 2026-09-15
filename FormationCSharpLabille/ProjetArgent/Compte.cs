@@ -68,6 +68,7 @@ namespace ProjetArgent
         /// <summary>
         /// Fonction vérifiant le plafond de la carte et effectuant le prélévement sur le compte appelé si valide
         /// Retire le montant correspondant sur le compte appelé
+        /// Ajoute la transaction actuelle à l'historique de la carte si vrai
         /// </summary>
         /// <returns>True si l'opération s'est bien déroulée false sinon</returns>
         public bool Prelevement(Transaction t)

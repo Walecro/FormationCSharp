@@ -74,9 +74,9 @@ namespace ProjetArgent
 
                     // Si les comptes sont tout deux courant OU que l'opération est intra compte  
                     // ET si le prélévement est un succès, on fait le virement sur le compte destinataire
-                    if (((c_exp._type == Compte.TypeCompte.Courant && c_dest._type == c_exp._type) || c_dest._carte.Equals(c_exp._carte)) && c_exp.Prelevement(t) )
+                    if ( ((c_exp._type == Compte.TypeCompte.Courant && c_dest._type == c_exp._type) || c_dest._carte ==( c_exp._carte)) && c_exp.Prelevement(t) )
                     {
-                        c_dest.Virement(t);
+                        c_dest.Virement(t); 
                         OKs.Add("OK  ");
                     }
                     else
@@ -106,9 +106,20 @@ namespace ProjetArgent
             StringBuilder WriteBuffer = new StringBuilder();
             using (FileStream fs = File.Open(pathwrite, FileMode.OpenOrCreate))
             {
-                for (int i = 0; i < OK.Count; i++)
+                //Première ligne sans soldes
+                WriteBuffer.Append("           ");
+                for (int j = 0; j < soldes[0].Count; j++)
                 {
-                    WriteBuffer.Append(OK[i] + "  ");
+                    WriteBuffer.Append(soldes[0][j] + " ");
+                }
+                WriteBuffer.Append("\n");
+                AddText(fs, WriteBuffer.ToString());
+                WriteBuffer.Clear();
+
+
+                for (int i = 1; i < OK.Count; i++)
+                {
+                    WriteBuffer.Append(i+ ".  "+OK[i] + "  ");
                     for (int j = 0; j < soldes[i].Count; j++)
                     {
                         WriteBuffer.Append(soldes[i][j] + " ");
