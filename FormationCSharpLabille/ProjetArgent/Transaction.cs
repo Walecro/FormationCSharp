@@ -9,11 +9,11 @@ namespace ProjetArgent
     public class Transaction
     {
 
-        int _id;
-        DateTime _horodatage;
-        double _montant;
-        int _cpt_exp;
-        int _cpt_dest;
+        internal int _id;
+        internal DateTime _horodatage;
+        internal double _montant;
+        internal int _cpt_exp;
+        internal int _cpt_dest;
 
         public Transaction(int id,DateTime horodatage,double montant,int cpt_exp,int cpt_dest)
         { 
@@ -25,6 +25,11 @@ namespace ProjetArgent
 
         }
 
+        public new string ToString()
+        {
+            return _id + " " + _horodatage + " " + _montant + " de " + _cpt_exp + " vers " + _cpt_dest;
+        }
 
+       
     }
 }

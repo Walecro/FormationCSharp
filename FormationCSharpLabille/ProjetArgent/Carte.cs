@@ -18,22 +18,43 @@ namespace ProjetArgent
 
         public Carte(string num,double plafond=500)
         {
-            _numcarte = num;
+            _numcarte = String.Copy(num);
             _plafond = plafond;
             _Liste_Cpt = new List<Compte>();
             _Historique = new List<Transaction>();
         }
 
         /// <summary>
-        /// Méthode appelé par la carte d'un compte débiteur
-        /// Renvoie true si  le plafond est respecté, false sinon
+        /// Méthode appelé par la carte d'un compte débiteur <br></br>
+        /// Ajoute la transaction actuelle à l'historique de la carte si vrai
         /// </summary>
         /// <param name="transaction">Possede l'dentifiant unique du compte débiteur ainsi que le montant</param>
-        /// <returns></returns>
-        public bool CheckPlafond(double amount)
+        /// <returns>True si  le plafond est respecté, false sinon</returns>
+        public bool CheckPlafond(Transaction t)
         {
-            //check historique sur 10 jour  + ajout à l'historique ? 
-            return true; 
+            //_Historique.Sort((x, y) => DateTime.Compare(x._horodatage, y._horodatage));
+            double cum = 0;
+            double cmp;
+            bool ok = false;
+
+            foreach (Transaction trans_past in _Historique)
+            {
+                //La transaction s'est elle produite dans les 10 derniers jours ? Si oui on la prend en compte
+                cmp = (t._horodatage - trans_past._horodatage).TotalDays;
+                if(cmp > -11.0 && cmp <= 0.0)
+                {
+                    cum += t._montant ;
+                }
+            }
+
+            if(t._montant + cum < _plafond)
+            {
+                _Historique.Add(t);
+                ok = true;
+            }
+
+
+            return ok; 
         }
 
         public new string ToString()
