@@ -10,6 +10,17 @@ namespace Or.Models
         public int Expediteur { get; set; }
         public int Destinataire { get; set; }
 
+        public enum CodeResultat
+        {
+            Valide,
+            MontantKO,
+            SoldeKO,
+            DestinataireKO,
+            PlafondKO
+        }
+
+        public CodeResultat statut;
+
         public Transaction(int idTransaction, DateTime horodatage, decimal montant, int expediteur, int destinataire)
         {
             IdTransaction = idTransaction;

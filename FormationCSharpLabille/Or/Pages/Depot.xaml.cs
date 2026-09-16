@@ -1,6 +1,7 @@
 ﻿using Or.Business;
 using Or.Models;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Data;
@@ -32,6 +33,8 @@ namespace Or.Pages
 
         private void ValiderDepot_Click(object sender, RoutedEventArgs e)
         {
+            List<Transaction.CodeResultat> codeResultat = new List<Transaction.CodeResultat>();
+
             if (decimal.TryParse(Montant.Text.Replace(".", ",").Trim(new char[] { '€', ' ' }), out decimal montant) && montant > 0)
             {
                 //Compte fictif pour permettre la transaction
@@ -46,15 +49,28 @@ namespace Or.Pages
 
                     OnReturn(null);
                 }
-                else
-                {
-                    MessageBox.Show("Opération refusée");
-                }
+              
             }
             else
             {
-                MessageBox.Show("Montant invalide");
+                MessageBox.Show(Label(Transaction.CodeResultat.MontantKO));
             }
         }
+
+        private string Label(Transaction.CodeResultat cr)
+        {
+            string ret = "";
+
+            switch (cr)
+            {
+                case Transaction.CodeResultat.MontantKO:
+                    ret = "Montant invalide";
+                    break;
+                default:
+                    break;
+            }
+            return ret;
+        }
+
     }
 }

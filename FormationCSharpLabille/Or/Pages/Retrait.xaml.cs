@@ -29,14 +29,13 @@ namespace Or.Pages
             CartePorteur.AlimenterHistoriqueEtListeComptes(transac, cpts);
 
 
-            PlafondRetraitMaxActuel.Text = SoldeCarteActuel(DateTime.Now ,numCarte).ToString("C2");
+            PlafondRetraitMaxActuel.Text = SoldeCarteActuel(DateTime.Now ,  transac).ToString("C2");
             PlafondMaxRetrait.Text = CartePorteur.Plafond.ToString("C2");
             Solde.Text = ComptePorteur.Solde.ToString("C2");
         }
 
-        private decimal SoldeCarteActuel(DateTime dt , long numCarte)
+        private decimal SoldeCarteActuel(DateTime dt , List<Transaction> transac)
         {
-            List<Transaction> transac = SqlRequests.ListeTransactionsAssociesCarte(numCarte);
             decimal cum = 0;
             double delta; 
             foreach (Transaction t in transac)
@@ -55,30 +54,73 @@ namespace Or.Pages
         {
             OnReturn(null);
         }
-
+      
         private void ValiderRetrait_Click(object sender, RoutedEventArgs e)
         {
+            List<Transaction.CodeResultat> codeResultat = new List<Transaction.CodeResultat>();
+            // T tmp 
+            Transaction t = new Transaction(0, DateTime.Now, 0, ComptePorteur.Id, 0);
+
             if (decimal.TryParse(Montant.Text.Replace(".", ",").Trim(new char[] { '€', ' ' }), out decimal montant) && montant > 0)
             {
                 //Compte fictif pour permettre la transaction
                 Compte compteBanque = new Compte(0, 0, TypeCompte.Courant, 0);
-                Transaction t = new Transaction(0, DateTime.Now, montant, ComptePorteur.Id, compteBanque.Id);
+                t.Montant = montant;
+                t.Destinataire = compteBanque.Id;
 
-                if (CartePorteur.EstRetraitAutoriseNiveauCarte(t, compteBanque, ComptePorteur) && ComptePorteur.EstRetraitValide(t))
-                {
-                    SqlRequests.EffectuerModificationOperationSimple(t, CartePorteur.Id);
 
-                    OnReturn(null);
-                }
-                else
+                // Potentiel réassignation de Valide mais c'est OK
+                codeResultat.Add(CartePorteur.EstRetraitAutoriseNiveauCarte(t, compteBanque, ComptePorteur));
+                if (!ComptePorteur.EstRetraitValide(t) )
                 {
-                    MessageBox.Show("Opération de retrait non authorisée");
+                    codeResultat.Add(Transaction.CodeResultat.SoldeKO);
                 }
+
             }
             else
             {
-                MessageBox.Show("Montant invalide");
+                codeResultat.Add(Transaction.CodeResultat.MontantKO);
             }
+
+            if (codeResultat.Count ==  1 && codeResultat[0] == Transaction.CodeResultat.Valide)
+            {
+                SqlRequests.EffectuerModificationOperationSimple(t, CartePorteur.Id);
+
+                OnReturn(null);
+            }
+            else
+            {
+                foreach (Transaction.CodeResultat code in codeResultat)
+                {
+                    MessageBox.Show(Label(code));
+
+                }
+            }
+        }
+        private string Label(Transaction.CodeResultat cr)
+        {
+            string ret = "";
+
+            switch (cr)
+            {
+                case Transaction.CodeResultat.MontantKO:
+                    ret = "Montant invalide";
+                    break;
+                case Transaction.CodeResultat.SoldeKO:
+                    ret = "Solde insuffisant";
+                    break;
+                    /*
+                case Transaction.CodeResultat.DestinataireKO:
+                    ret = "Opération intercompte invalide";
+                    break;
+                    */
+                case Transaction.CodeResultat.PlafondKO:
+                    ret = "Plafond carte insuffisant";
+                    break;
+                default:
+                    break;
+            }
+            return ret;
         }
     }
 }

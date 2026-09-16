@@ -46,9 +46,17 @@ namespace Or.Models
         /// <param name="Expediteur"></param>
         /// <param name="Destinataire"></param>
         /// <returns></returns>
-        public bool EstRetraitAutoriseNiveauCarte(Transaction transaction, Compte Expediteur, Compte Destinataire)
+        public Transaction.CodeResultat EstRetraitAutoriseNiveauCarte(Transaction transaction, Compte Expediteur, Compte Destinataire)
         {
-            return EstOperationAutoriseeContraintesComptes(Expediteur, Destinataire) && EstEligibleMaximumRetraitHebdomadaire(transaction.Montant, transaction.Horodatage);
+            Transaction.CodeResultat code = Transaction.CodeResultat.Valide;
+            if (!EstOperationAutoriseeContraintesComptes(Expediteur, Destinataire))
+            {
+                code = Transaction.CodeResultat.DestinataireKO;
+            }else if (!EstEligibleMaximumRetraitHebdomadaire(transaction.Montant, transaction.Horodatage))
+            {
+                code = Transaction.CodeResultat.PlafondKO;
+            }
+            return  code ;
         }
 
         /// <summary>

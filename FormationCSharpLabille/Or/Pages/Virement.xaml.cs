@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Navigation;
+using System.Collections.Generic;
 
 namespace Or.Pages
 {
@@ -51,27 +52,44 @@ namespace Or.Pages
 
         private void ValiderVirement_Click(object sender, RoutedEventArgs e)
         {
+            List<Transaction.CodeResultat> codes = new List<Transaction.CodeResultat>();
+
+            Compte ex = Expediteur.SelectedItem as Compte;
+            Compte de = Destinataire.SelectedItem as Compte;
+            Transaction t = new Transaction(0, DateTime.Now, 0, ex.Id, de.Id);
             if (decimal.TryParse(Montant.Text.Replace(".", ",").Trim(new char[] { '€', ' ' }), out decimal montant))
-            {
-                Compte ex = Expediteur.SelectedItem as Compte;
-                Compte de = Destinataire.SelectedItem as Compte;
+            { 
+                t.Montant = montant;
 
-                Transaction t = new Transaction(0, DateTime.Now, montant, ex.Id, de.Id);
+                if ( ! (Expediteur.SelectedItem as Compte).EstRetraitValide(t)) {
 
-                if ((Expediteur.SelectedItem as Compte).EstRetraitValide(t) && CartePorteur.EstRetraitAutoriseNiveauCarte(t, ex, de))
-                {
-                    SqlRequests.EffectuerModificationOperationInterCompte(t, ex.IdentifiantCarte, de.IdentifiantCarte);
-                    OnReturn(null);
+                    codes.Add(Transaction.CodeResultat.SoldeKO);
+                    
                 }
-                else
-                {
-                    MessageBox.Show("Opération de virement non autorisé");
-                }
+                codes.Add(CartePorteur.EstRetraitAutoriseNiveauCarte(t, ex, de));
+
             }
             else
             {
-                MessageBox.Show("Montant invalide");
+
+                codes.Add(Transaction.CodeResultat.MontantKO);
             }
+
+            if (codes.Count == 1 && codes[0] == Transaction.CodeResultat.Valide)
+            {
+                SqlRequests.EffectuerModificationOperationInterCompte(t, ex.IdentifiantCarte, de.IdentifiantCarte);
+                OnReturn(null);
+            }
+            else
+            {
+
+                foreach (Transaction.CodeResultat code in codes)
+                {
+                    MessageBox.Show(Label(code));
+
+                }
+            }
+
 
         }
 
@@ -83,5 +101,31 @@ namespace Or.Pages
             viewDestinataire.SortDescriptions.Add(new SortDescription("TypeDuCompte", ListSortDirection.Ascending));
             Destinataire.ItemsSource = viewDestinataire;
         }
+
+        private string Label(Transaction.CodeResultat cr)
+        {
+            string ret = "";
+        
+                switch (cr)
+                {
+                    case Transaction.CodeResultat.MontantKO:
+                        ret = "Montant invalide";
+                        break;
+                    case Transaction.CodeResultat.SoldeKO:
+                        ret = "Solde insuffisant";
+                        break;
+                    case Transaction.CodeResultat.DestinataireKO:
+                        ret = "Opération intercompte invalide";
+                        break;
+                    case Transaction.CodeResultat.PlafondKO:
+                        ret = "Plafond carte insuffisant";
+                        break;
+                    default:
+                        break;
+              
+            }
+            return ret;
+        }
+
     }
 }
