@@ -10,12 +10,28 @@ namespace Or.Business
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is )
+            Operation op = Tools.TypeTransaction(((Models.Transaction)value).Expediteur, ((Models.Transaction)value).Destinataire);
+            string ret = "Error";
+            if (value is Models.Transaction)
             {
-                return value;
-            } 
+                switch (op){
+                    case Operation.RetraitSimple:
+                        ret = "Retrait";
+                        break;
+                    case Operation.DepotSimple:
+                        ret = "Dépôt";
+                        break;
+                    case Operation.InterCompte:
+                        ret = "Virement";
+                        break;
+                    default:
+                        break;
+                }
 
-;
+            }
+            return ret;
+           
+
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
