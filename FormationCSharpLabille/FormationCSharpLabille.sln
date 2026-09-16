@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfApp", "WpfApp\WpfApp.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Or", "Or\Or.csproj", "{8E58D626-3838-4CDA-8C69-B9C0386E35D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BatailleNavale", "Bataille_Navale\BatailleNavale\BatailleNavale.csproj", "{304D44A3-B400-4BBA-8D4C-C5987A8CCCDD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{8E58D626-3838-4CDA-8C69-B9C0386E35D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E58D626-3838-4CDA-8C69-B9C0386E35D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E58D626-3838-4CDA-8C69-B9C0386E35D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{304D44A3-B400-4BBA-8D4C-C5987A8CCCDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{304D44A3-B400-4BBA-8D4C-C5987A8CCCDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{304D44A3-B400-4BBA-8D4C-C5987A8CCCDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{304D44A3-B400-4BBA-8D4C-C5987A8CCCDD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
