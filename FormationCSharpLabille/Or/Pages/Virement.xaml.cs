@@ -102,6 +102,22 @@ namespace Or.Pages
             Destinataire.ItemsSource = viewDestinataire;
         }
 
+        private void GoAjouterBeneficiaire(object sender, SelectionChangedEventArgs e)
+        {
+            PageFunctionNavigate(new AjouterBeneficiaire(ComptePorteur.Id)); 
+        }
+
+
+        void PageFunctionNavigate(PageFunction<long> page)
+        {
+            page.Return += new ReturnEventHandler<long>(PageFunction_Return);
+            NavigationService.Navigate(page);
+        }
+
+        void PageFunction_Return(object sender, ReturnEventArgs<long> e)
+        {
+        }
+
         private string Label(Transaction.CodeResultat cr)
         {
             string ret = "";

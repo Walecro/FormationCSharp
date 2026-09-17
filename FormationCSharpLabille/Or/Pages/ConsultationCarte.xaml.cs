@@ -11,14 +11,16 @@ namespace Or.Pages
     /// </summary>
     public partial class ConsultationCarte : PageFunction<long>
     {
+        Carte c;
         public ConsultationCarte(long numCarte)
         {
             InitializeComponent();
-            Carte c = SqlRequests.InfosCarte(numCarte);
+            c = SqlRequests.InfosCarte(numCarte);
             
             Numero.Text = c.Id.ToString();
             Prenom.Text = c.PrenomClient;
             Nom.Text = c.NomClient;
+            
 
             listView.ItemsSource = SqlRequests.ListeComptesAssociesCarte(numCarte);
         }
@@ -46,6 +48,12 @@ namespace Or.Pages
         {
             PageFunctionNavigate(new Depot(long.Parse(Numero.Text)));
         }
+
+        private void GoListeBeneficiaires(object sender, RoutedEventArgs e)
+        {
+            PageFunctionNavigate(new ListeBeneficiaires(c.Id));
+        }
+
 
         void PageFunctionNavigate(PageFunction<long> page)
         {

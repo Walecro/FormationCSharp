@@ -35,7 +35,7 @@ namespace Or.Pages
                 gridView.Columns[1].Width = totalWidth * 0.30; // 30%
                 gridView.Columns[2].Width = totalWidth * 0.25; // 25%
                 gridView.Columns[3].Width = totalWidth * 0.15; // 15%
-                gridView.Columns[3].Width = totalWidth * 0.15; // 15%
+                gridView.Columns[4].Width = totalWidth * 0.15; // 15%
             }
         }
     }

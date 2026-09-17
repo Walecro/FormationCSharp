@@ -29,6 +29,11 @@ namespace Or.Business
 
         static readonly string queryUpdateCompte = "UPDATE COMPTE SET Solde=Solde-@Montant WHERE IdtCpt=@IdtCompte";
 
+        static readonly string queryListeBenef = "SELECT IdtCpt,NomClient,PrenomClient FROM CARTE INNER JOIN COMPTE ON CARTE.NumCarte = COMPTE.NumCarte WHERE IdtCpt IN (SELECT ID_COMPTE_BENEF FROM BENEFICIAIRE WHERE ID_COMPTE IN (SELECT IdtCpt FROM COMPTE Where NumCarte LIKE @NumCarte));";
+
+        static readonly string queryInsertBenef = "INSERT INTO BENEFICIAIRE (ID_COMPTE,ID_COMPTE_BENEF) VALUES @IdtCpt , @IdtCptBenef";
+        static readonly string queryDeleteBenef = "DELETE FROM BENEFICIAIRE WHERE ID_COMPTE == @IdtCpt AND ID_COMPTE_BENEF = @IdtCptBenef";
+
         /// <summary>
         /// Obtention des infos d'une carte
         /// </summary>
@@ -193,7 +198,7 @@ namespace Or.Business
         /// Liste des transactions associées à une carte donnée
         /// </summary>
         /// <param name="numCarte"></param>
-        /// <returns></returns>
+        /// <returns></returns> 
         public static List<Transaction> ListeTransactionsAssociesCarte(long numCarte)
         {
             List<Transaction> transactions = new List<Transaction>();
@@ -234,11 +239,6 @@ namespace Or.Business
             return transactions;
         }
 
-        /// <summary>
-        /// Liste des transactions associées à un compte donné
-        /// </summary>
-        /// <param name="numCarte"></param>
-        /// <returns></returns>
         public static List<Transaction> ListeTransactionsAssociesCompte(int idtCpt)
         {
             List<Transaction> transactions = new List<Transaction>();
@@ -278,6 +278,48 @@ namespace Or.Business
             }
 
             return transactions;
+        }
+
+
+        /// <summary>
+        /// Liste des bénéficiaires associées à un compte donné
+        /// </summary>
+        /// <param name="numCarte"></param>
+        /// <returns></returns>
+        public static List<Beneficiaire> ListeBeneficiaire(long NumCarte)
+        {
+            List<Beneficiaire> Compte_benef = new List<Beneficiaire>();
+
+            string connectionString = ConstructionConnexionString(fileDb);
+
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (var command = new SqliteCommand(queryListeBenef, connection))
+                {
+                    command.Parameters.AddWithValue("@NumCarte", NumCarte);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        string nom, prenom;
+                        int Id_Cpt;
+
+                        while (reader.Read())
+                        {
+
+                            Id_Cpt = reader.GetInt32(0);
+                            nom = reader.GetString(1);
+                            prenom = reader.GetString(2);
+
+                            Compte_benef.Add(new Beneficiaire(Id_Cpt, nom, prenom));
+
+                        }
+                    }
+                }
+
+                return Compte_benef;
+            }
         }
 
 
@@ -468,6 +510,33 @@ namespace Or.Business
 
             return updateCompte;
         }
+
+        private static SqliteCommand ConstructionInsertionBeneficiaire(SqliteConnection connection, int idcpt, int idcptbenef)
+        {
+            // Insertion de la transaction
+            var inserBenef = connection.CreateCommand();
+            inserBenef.CommandText = queryInsertBenef;
+
+            inserBenef.Parameters.AddWithValue("@IdtCpt", idcpt);
+            inserBenef.Parameters.AddWithValue("@IdtCptBenef", idcptbenef);
+      
+
+            return inserBenef;
+        }
+
+        private static SqliteCommand ConstructionDeleteBeneficiaire(SqliteConnection connection, int idcpt, int idcptbenef)
+        {
+            // Insertion de la transaction
+            var deleteBenef = connection.CreateCommand();
+            deleteBenef.CommandText = queryDeleteBenef;
+
+            deleteBenef.Parameters.AddWithValue("@IdtCpt", idcpt);
+            deleteBenef.Parameters.AddWithValue("@IdtCptBenef", idcptbenef);
+
+
+            return deleteBenef;
+        }
+
 
     }
 }
