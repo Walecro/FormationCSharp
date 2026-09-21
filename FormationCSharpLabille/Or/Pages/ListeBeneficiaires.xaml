@@ -32,13 +32,13 @@
             <TextBlock x:Name="Numero"  Margin="0,0,0,8" HorizontalAlignment="Stretch"  TextWrapping="Wrap" VerticalAlignment="Stretch" Background="#FFD2D0D0" Height="20" FontSize="14"/>
 
         </StackPanel>
-        
+
 
         <StackPanel Margin="10" Orientation="Vertical" Grid.Row="2" Grid.Column="0">
             <Button x:Name="Retour" Content="Retour" Margin="0,0,0,8"  HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="Retour_Click" />
         </StackPanel>
 
-        <ListView x:Name="listView" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="2" SizeChanged="ListView_SizeChanged">
+        <ListView x:Name="listView" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="2" SizeChanged="ListView_SizeChanged" Width="auto">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -46,7 +46,7 @@
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Nom" Width="30">
+                    <GridViewColumn Header="Nom" Width="auto">
 
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -59,7 +59,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Prénom" Width="30">
+                    <GridViewColumn Header="Prénom" Width="auto">
 
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -72,7 +72,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="N° Compte" Width="30">
+                    <GridViewColumn Header="N° Compte" Width="auto">
 
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -85,7 +85,25 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
+                    <GridViewColumn Header="Actions" Width="auto">
+
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <TextBlock Text=""
+                                               Style="{StaticResource TextColumnStyle}">
+                                        
+                                        <Button Content="Supprimer" Click="Button_Click"></Button>
+                                        
+                                    </TextBlock>
+                                    
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     
+
+
 
 
 

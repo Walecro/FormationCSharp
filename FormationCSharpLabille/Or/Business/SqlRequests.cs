@@ -477,7 +477,7 @@ namespace Or.Business
             insertTransac.Parameters.AddWithValue("@Montant", trans.Montant);
             insertTransac.Parameters.AddWithValue("@CptExp", trans.Expediteur);
             insertTransac.Parameters.AddWithValue("@CptDest", trans.Destinataire);
-            
+
             return insertTransac;
         }
 
@@ -511,7 +511,7 @@ namespace Or.Business
             return updateCompte;
         }
 
-        private static SqliteCommand ConstructionInsertionBeneficiaire(SqliteConnection connection, int idcpt, int idcptbenef)
+        public static SqliteCommand ConstructionInsertionBeneficiaire(SqliteConnection connection, int idcpt, int idcptbenef)
         {
             // Insertion de la transaction
             var inserBenef = connection.CreateCommand();
@@ -519,24 +519,33 @@ namespace Or.Business
 
             inserBenef.Parameters.AddWithValue("@IdtCpt", idcpt);
             inserBenef.Parameters.AddWithValue("@IdtCptBenef", idcptbenef);
-      
+
 
             return inserBenef;
         }
 
-        private static SqliteCommand ConstructionDeleteBeneficiaire(SqliteConnection connection, int idcpt, int idcptbenef)
+        public static void ConstructionDeleteBeneficiaire(int idcpt, int idcptbenef)
         {
-            // Insertion de la transaction
-            var deleteBenef = connection.CreateCommand();
-            deleteBenef.CommandText = queryDeleteBenef;
+            string connectionString = ConstructionConnexionString(fileDb);
 
-            deleteBenef.Parameters.AddWithValue("@IdtCpt", idcpt);
-            deleteBenef.Parameters.AddWithValue("@IdtCptBenef", idcptbenef);
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (var command = new SqliteCommand(queryDeleteBenef, connection))
+                {
+                    command.Parameters.AddWithValue("@IdtCpt", idcpt);
+                    command.Parameters.AddWithValue("@IdtCptBenef", idcptbenef);
 
 
-            return deleteBenef;
+                    command.ExecuteNonQuery();
+
+                    }
+                }
+            }
         }
-
-
     }
-}
+
+
+    
+

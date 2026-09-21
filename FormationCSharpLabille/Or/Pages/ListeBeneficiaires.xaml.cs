@@ -10,7 +10,8 @@ namespace Or.Pages
     /// <summary>
     /// Logique ht'interaction pour ConsultationCarte.xaml
     /// </summary>
-    public partial class ListeBeneficiaires { 
+    public partial class ListeBeneficiaires
+    {
         public ListeBeneficiaires(long NumCarte)
         {
             InitializeComponent();
@@ -35,7 +36,7 @@ namespace Or.Pages
 
         void PageFunction_Return(object sender, ReturnEventArgs<long> e)
         {
-           
+
         }
 
         private void ListView_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -44,12 +45,19 @@ namespace Or.Pages
             if (gridView != null)
             {
                 double totalWidth = listView.ActualWidth - SystemParameters.VerticalScrollBarWidth;
-               
+
             }
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            long idt = ((Beneficiaire)listView.Items[0]).Id_Cpt;
 
-    }
+            SqlRequests.ConstructionDeleteBeneficiaire(1, 3);
 
+
+
+        }
     }
+}
 
