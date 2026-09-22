@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Or.Business
 {
@@ -29,10 +30,11 @@ namespace Or.Business
 
         static readonly string queryUpdateCompte = "UPDATE COMPTE SET Solde=Solde-@Montant WHERE IdtCpt=@IdtCompte";
 
-        static readonly string queryListeBenef = "SELECT IdtCpt,NomClient,PrenomClient FROM CARTE INNER JOIN COMPTE ON CARTE.NumCarte = COMPTE.NumCarte WHERE IdtCpt IN (SELECT ID_COMPTE_BENEF FROM BENEFICIAIRE WHERE ID_COMPTE IN (SELECT IdtCpt FROM COMPTE Where NumCarte LIKE @NumCarte));";
+        static readonly string queryListeBenef = "SELECT C1.IdtCpt, ID_COMPTE_BENEF, Carte.NomClient , Carte.PrenomClient FROM COMPTE AS C1 INNER JOIN BENEFICIAIRE ON ID_COMPTE = C1.IdtCpt  INNER JOIN COMPTE AS C2 ON ID_COMPTE_BENEF = C2.IdtCpt INNER JOIN Carte ON C2.NumCarte = Carte.NumCarte;";
 
-        static readonly string queryInsertBenef = "INSERT INTO BENEFICIAIRE (ID_COMPTE,ID_COMPTE_BENEF) VALUES @IdtCpt , @IdtCptBenef";
-        static readonly string queryDeleteBenef = "DELETE FROM BENEFICIAIRE WHERE ID_COMPTE == @IdtCpt AND ID_COMPTE_BENEF = @IdtCptBenef";
+        static readonly string queryInsertBenef = "INSERT INTO BENEFICIAIRE (ID_COMPTE,ID_COMPTE_BENEF) VALUES (@IdtCpt , @IdtCptBenef)";
+        static readonly string queryDeleteBenef = "DELETE FROM BENEFICIAIRE WHERE ID_COMPTE = @IdtCpt AND ID_COMPTE_BENEF = @IdtCptBenef";
+        static readonly string queryGetCarteCompte = "SELECT IdtCpt,NumCarte,Solde,TypeCompte FROM COMPTE WHERE IdtCpt = @Id";
 
         /// <summary>
         /// Obtention des infos d'une carte
@@ -303,16 +305,17 @@ namespace Or.Business
                     using (var reader = command.ExecuteReader())
                     {
                         string nom, prenom;
-                        int Id_Cpt;
+                        int Id_Cpt, Id_Cpt_Benef;
 
                         while (reader.Read())
                         {
 
                             Id_Cpt = reader.GetInt32(0);
-                            nom = reader.GetString(1);
-                            prenom = reader.GetString(2);
+                            Id_Cpt_Benef = reader.GetInt32(1);
+                            nom = reader.GetString(2);
+                            prenom = reader.GetString(3);
 
-                            Compte_benef.Add(new Beneficiaire(Id_Cpt, nom, prenom));
+                            Compte_benef.Add(new Beneficiaire(Id_Cpt, Id_Cpt_Benef,nom, prenom));
 
                         }
                     }
@@ -322,6 +325,42 @@ namespace Or.Business
             }
         }
 
+        public static Compte GetCompteFromID(int idcpt)
+        {
+            int idtCpt;
+            long carte;
+            decimal solde;
+            string typeCompte;
+
+            Compte compte = new Compte(0,0,TypeCompte.Courant,0);
+
+            string connectionString = ConstructionConnexionString(fileDb);
+
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (var command = new SqliteCommand(queryGetCarteCompte, connection))
+                {
+                    command.Parameters.AddWithValue("@Id", idcpt);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                       
+                        while (reader.Read())
+                        {
+                            idtCpt = reader.GetInt32(0);
+                            carte = reader.GetInt64(1);
+                            solde = reader.GetDecimal(2);
+                            typeCompte = reader.GetString(3);
+
+                            compte = new Compte(idtCpt, carte, typeCompte == "Courant" ? TypeCompte.Courant : TypeCompte.Livret, solde);
+                        }
+                    }
+                }
+            }
+            return compte;
+        }
 
         /// <summary>
         /// Procédure pour mettre à jour les données pour un retrait
@@ -511,17 +550,34 @@ namespace Or.Business
             return updateCompte;
         }
 
-        public static SqliteCommand ConstructionInsertionBeneficiaire(SqliteConnection connection, int idcpt, int idcptbenef)
+        public static void ConstructionInsertionBeneficiaire(int idcpt, int idcptbenef)
         {
-            // Insertion de la transaction
-            var inserBenef = connection.CreateCommand();
-            inserBenef.CommandText = queryInsertBenef;
+            string connectionString = ConstructionConnexionString(fileDb);
 
-            inserBenef.Parameters.AddWithValue("@IdtCpt", idcpt);
-            inserBenef.Parameters.AddWithValue("@IdtCptBenef", idcptbenef);
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
 
+               
 
-            return inserBenef;
+                    var inserBenef = connection.CreateCommand();
+                    inserBenef.CommandText = queryInsertBenef;
+
+                    inserBenef.Parameters.AddWithValue("@IdtCpt", idcpt);
+                    inserBenef.Parameters.AddWithValue("@IdtCptBenef", idcptbenef);
+                try
+                {
+                    inserBenef.ExecuteNonQuery();
+
+                }
+                catch (SqliteException e)
+                {
+                    MessageBox.Show("Compte Invalide");
+                }
+               
+
+            }
+
         }
 
         public static void ConstructionDeleteBeneficiaire(int idcpt, int idcptbenef)
@@ -532,15 +588,17 @@ namespace Or.Business
             {
                 connection.Open();
 
-                using (var command = new SqliteCommand(queryDeleteBenef, connection))
-                {
-                    command.Parameters.AddWithValue("@IdtCpt", idcpt);
-                    command.Parameters.AddWithValue("@IdtCptBenef", idcptbenef);
+              
+                    var deletebenef = connection.CreateCommand();
+                     deletebenef.CommandText = queryDeleteBenef;
+                    deletebenef.Parameters.AddWithValue("@IdtCpt", idcpt);
+                    deletebenef.Parameters.AddWithValue("@IdtCptBenef", idcptbenef);
 
 
-                    command.ExecuteNonQuery();
+                    deletebenef.ExecuteNonQuery();
 
-                    }
+
+                   
                 }
             }
         }

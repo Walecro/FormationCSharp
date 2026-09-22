@@ -19,9 +19,9 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="6*" />
+            <ColumnDefinition Width="240*" />
+            <ColumnDefinition Width="189*" />
+            <ColumnDefinition Width="371*" />
         </Grid.ColumnDefinitions>
 
         <StackPanel Margin="10" Orientation="Vertical" Grid.Row="0" Grid.Column="0">
@@ -38,7 +38,12 @@
             <Button x:Name="Retour" Content="Retour" Margin="0,0,0,8"  HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="Retour_Click" />
         </StackPanel>
 
-        <ListView x:Name="listView" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="2" SizeChanged="ListView_SizeChanged" Width="auto">
+        <StackPanel Margin="10" Orientation="Vertical" Grid.Row="2" Grid.Column="1">
+            <Button x:Name="Ajouter" Content="Ajouter" Margin="0,0,0,0"  HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="GoAjouterBeneficiaire_Click" />
+        </StackPanel>
+
+
+        <ListView x:Name="listView" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="2" SizeChanged="ListView_SizeChanged" Width="361" Height="343">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -77,7 +82,7 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
-                                    <TextBlock Text="{Binding Id_Cpt}"
+                                    <TextBlock Text="{Binding Id_Cpt_benef}"
                                                Style="{StaticResource TextColumnStyle}"
                                                TextAlignment="Center" />
                                 </Grid>
@@ -93,15 +98,15 @@
                                     <TextBlock Text=""
                                                Style="{StaticResource TextColumnStyle}">
                                         
-                                        <Button Content="Supprimer" Click="Button_Click"></Button>
-                                        
+                                        <Button Content="Supprimer" Click="Supprimer_Click"></Button>
+
                                     </TextBlock>
-                                    
+
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    
+
 
 
 

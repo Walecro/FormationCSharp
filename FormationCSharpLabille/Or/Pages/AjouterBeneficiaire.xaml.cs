@@ -15,15 +15,59 @@ namespace Or.Pages
     /// </summary>
     public partial class AjouterBeneficiaire : PageFunction<long>
     {
-       
-        public AjouterBeneficiaire(int IdtCpt)
+
+        Compte _Cpt;
+        public AjouterBeneficiaire(Compte Cpt)
         {
             InitializeComponent();
+
+            //Recupérer la liste des comptes susceptibles  ?
+
+
+            _Cpt = Cpt;
             
-            //Recupérer la liste des comptes susceptibles 
 
         }
 
-        
+        public void Ajouter_Click(object sender, RoutedEventArgs e)
+        {
+            int cpt_dest = int.Parse(Compte.Text);
+            //Verif =
+
+            Compte compte_dest = SqlRequests.GetCompteFromID(cpt_dest);
+            
+
+            if (compte_dest.TypeDuCompte == _Cpt.TypeDuCompte && _Cpt.TypeDuCompte == TypeCompte.Courant && compte_dest.IdentifiantCarte != _Cpt.IdentifiantCarte)
+            {
+                // try catch unique
+                SqlRequests.ConstructionInsertionBeneficiaire(_Cpt.Id, cpt_dest);
+
+                PageFunctionNavigate(new ListeBeneficiaires(_Cpt));
+            }
+            else
+            {
+                MessageBox.Show("Compte Invalide");
+            }
+
+            
+        }
+
+        void PageFunctionNavigate(PageFunction<long> page)
+        {
+            page.Return += new ReturnEventHandler<long>(PageFunction_Return);
+            NavigationService.Navigate(page);
+        }
+
+        void PageFunction_Return(object sender, ReturnEventArgs<long> e)
+        {
+
+        }
+
+        // Cas spécial de retour modulaire 
+        private void Retour_Click(object sender, RoutedEventArgs e)
+        {
+            PageFunctionNavigate(new ListeBeneficiaires(_Cpt));
+
+        }
     }
 }

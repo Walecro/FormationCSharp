@@ -10,12 +10,35 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Retrait">
 
-    <Grid>
+    <Grid HorizontalAlignment="Right" Width="800">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+
+        <StackPanel Margin="10,10,10,169" Orientation="Vertical" Grid.Row="0" Grid.Column="0">
+            <TextBlock x:Name="Titre" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Ajouter un bénéficiaire" VerticalAlignment="Top" FontSize="20" FontWeight="SemiBold"/>
+        </StackPanel>
+
+        <StackPanel Margin="20,42,0,137" Orientation="Vertical" Grid.Column="0">
+            <TextBlock x:Name="CompteLabel" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="20" FontWeight="SemiBold"/>
+            <TextBlock x:Name="CompteActuel" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="20" FontWeight="SemiBold"/>
+        </StackPanel>
+
+
+        <Label x:Name="labelT" Content="N° Compte du nouveau bénéficiaire" HorizontalAlignment="Left" Margin="51,121,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.132,-0.27" Width="198"/>
+        <TextBox x:Name="Compte" HorizontalAlignment="Left" Margin="51,150,0,0" VerticalAlignment="Top" Width="194" Height="22" TextAlignment="Right" TextWrapping="Wrap"/>
+
+        <StackPanel Margin="0,150,10,24" Orientation="Vertical" Grid.Column="1">
+            <Button x:Name="Ajouter" HorizontalAlignment="Left"  Content="Ajouter" VerticalAlignment="Top" FontSize="20" FontWeight="SemiBold" Click="Ajouter_Click"/>
+        </StackPanel>
+
+        <StackPanel Margin="10,106,10,10" Orientation="Vertical" Grid.Row="3" Grid.Column="0">
+            <Button x:Name="Retour" HorizontalAlignment="Left"  Content="Retour" VerticalAlignment="Top" FontSize="20" FontWeight="SemiBold" Click="Retour_Click"/>
+        </StackPanel>
+
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -23,6 +46,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        
+
+
     </Grid>
 </PageFunction>

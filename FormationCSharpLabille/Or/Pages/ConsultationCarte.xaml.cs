@@ -12,11 +12,12 @@ namespace Or.Pages
     public partial class ConsultationCarte : PageFunction<long>
     {
         Carte c;
+        Compte CompteCourant;
         public ConsultationCarte(long numCarte)
         {
             InitializeComponent();
             c = SqlRequests.InfosCarte(numCarte);
-            
+            CompteCourant = SqlRequests.ListeComptesAssociesCarte(numCarte)[0];
             Numero.Text = c.Id.ToString();
             Prenom.Text = c.PrenomClient;
             Nom.Text = c.NomClient;
@@ -51,7 +52,7 @@ namespace Or.Pages
 
         private void GoListeBeneficiaires(object sender, RoutedEventArgs e)
         {
-            PageFunctionNavigate(new ListeBeneficiaires(c.Id));
+            PageFunctionNavigate(new ListeBeneficiaires(CompteCourant));
         }
 
 

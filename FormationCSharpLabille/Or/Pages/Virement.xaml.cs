@@ -102,9 +102,9 @@ namespace Or.Pages
             Destinataire.ItemsSource = viewDestinataire;
         }
 
-        private void GoAjouterBeneficiaire(object sender, SelectionChangedEventArgs e)
+        private void GoAjouterBeneficiaire_Click(object sender, RoutedEventArgs e)
         {
-            PageFunctionNavigate(new AjouterBeneficiaire(ComptePorteur.Id)); 
+            PageFunctionNavigate(new AjouterBeneficiaire(ComptePorteur)); 
         }
 
 
