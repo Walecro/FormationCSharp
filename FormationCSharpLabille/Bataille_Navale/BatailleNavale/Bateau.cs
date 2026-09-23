@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace BatailleNavale
 {
@@ -31,6 +30,8 @@ namespace BatailleNavale
                 {
                     p.Touché();
 
+                    // Pour éviter le contrôle pour chaque Position du tableau, tu pourrais faire la mise à jour Coulé en dehors de la première boucle
+
                     // A t on touché la dernière case d'un bateau ? 
                     foreach (Position p2 in Positions)
                     {
@@ -41,7 +42,7 @@ namespace BatailleNavale
                     }
 
                     //Si oui on met à jour l'état des cases du bateau
-                    if(Kum_touche == Positions.Count)
+                    if (Kum_touche == Positions.Count)
                     {
                         foreach (Position p2 in Positions)
                         {
@@ -60,13 +61,14 @@ namespace BatailleNavale
         {
             int Kum_touche = 0;
 
-            foreach(Position p in Positions)
+            foreach (Position p in Positions)
             {
                 if (p.Statut == Position.Etat.Coulé)
                 {
-                    Kum_touche++; 
+                    Kum_touche++;
                 }
             }
+            // Cohérent avec l'implémentation de Touché() 
             return Kum_touche == Positions.Count;
         }
     }

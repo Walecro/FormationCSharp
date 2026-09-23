@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace BatailleNavale
 {
@@ -23,9 +20,9 @@ namespace BatailleNavale
                new Bateau("D", 3, new List<Position>()),
                new Bateau("E", 2, new List<Position>())
             };
-            for(int i = 0; i < taille; i++)
+            for (int i = 0; i < taille; i++)
             {
-                for(int j = 0; j < taille; j++)
+                for (int j = 0; j < taille; j++)
                 {
                     PlateauJeu[i, j] = new Position(i, j);
                 }
@@ -34,10 +31,10 @@ namespace BatailleNavale
 
         public void CreationPlateau()
         {
-           
-            for(int i = 0; i < PlateauJeu.GetLength(0); i ++)
+
+            for (int i = 0; i < PlateauJeu.GetLength(0); i++)
             {
-                for(int j = 0; j < PlateauJeu.GetLength(1); j++)
+                for (int j = 0; j < PlateauJeu.GetLength(1); j++)
                 {
                     //Init des cases du plateau
                     PlateauJeu[i, j] = new Position(i, j);
@@ -49,11 +46,10 @@ namespace BatailleNavale
 
             int x, y;
             int estVertical;
-            foreach(Bateau B in Bateaux)
+            foreach (Bateau B in Bateaux)
             {
                 do
                 {
-
                     // [0;9]
                     x = Rand.Next() % 10;
                     y = Rand.Next() % 10;
@@ -65,7 +61,7 @@ namespace BatailleNavale
 
                 } while (!PlacerBateau(x, y, B.Taille, estVertical == 0 ? false : true));
 
-                for(int i = 0; i < B.Taille; i++)
+                for (int i = 0; i < B.Taille; i++)
                 {
                     if (estVertical == 1)
                     {
@@ -77,16 +73,14 @@ namespace BatailleNavale
                     }
 
                 }
-               
             }
-
         }
-        
+
         public void LancementPartie()
         {
             int cpt = 0;
-            int x_in =-1, y_in=-1;
-            bool x_ok = false, y_ok = false ;
+            int x_in = -1, y_in = -1;
+            bool x_ok = false, y_ok = false;
 
             string val;
             string[] position;
@@ -109,7 +103,7 @@ namespace BatailleNavale
                 Console.Write(")");
                 Console.WriteLine();
 
-                // Boucle rcupération entrée utilisateur 
+                // Boucle récupération entrée utilisateur 
                 do
                 {
                     val = Console.ReadLine();
@@ -145,23 +139,24 @@ namespace BatailleNavale
         /// <returns></returns>
         private bool PlacerBateau(int x, int y, int taille, bool estVertical)
         {
+            // Clair
             bool placement_ok = true;
 
             if (estVertical)
             {
                 //Dépasse t on ? 
-                if(x+taille < 10)
+                if (x + taille < 10)
                 {
                     //Prise en charge du rectangle autour du bateau
-                    for (int offset = -1; offset <= taille; offset ++)
-                    { 
+                    for (int offset = -1; offset <= taille; offset++)
+                    {
                         //Parcours de tous les autres bateaux
-                        foreach(Bateau b in Bateaux)
+                        foreach (Bateau b in Bateaux)
                         {
                             //Le bateau EST placé, on le prend en compte
-                            if(!(b.Positions.Count == 0))
+                            if (!(b.Positions.Count == 0))
                             {
-                                foreach(Position p in b.Positions)
+                                foreach (Position p in b.Positions)
                                 {
                                     //Prise en charge des lignes du bateau ainsi que les lignes de débordement - 1 + 1 
                                     if (p.X == x + offset)
@@ -224,13 +219,13 @@ namespace BatailleNavale
         /// <param name="y"></param>
         public void Viser(int x, int y)
         {
-           //Parcours de tous les bateaux et test de la case
-            foreach(Bateau b in Bateaux)
+            // Parcours de tous les bateaux et test de la case
+            foreach (Bateau b in Bateaux)
             {
                 b.Touché(x, y);
             }
-            //Si pas de modif 
-            if(PlateauJeu[x,y].Statut == Position.Etat.Caché)
+            // Si pas de modif 
+            if (PlateauJeu[x, y].Statut == Position.Etat.Caché)
             {
                 PlateauJeu[x, y].Plouf();
             }
@@ -297,16 +292,16 @@ namespace BatailleNavale
         /// La partie est-elle finie ? 
         /// </summary>
         /// <returns></returns>
-        internal bool FindePartie() 
-		{
-            foreach(Bateau b in Bateaux)
+        internal bool FindePartie()
+        {
+            foreach (Bateau b in Bateaux)
             {
                 if (!b.EstCoulé())
                 {
                     return false;
                 }
             }
-			return true;
-		}
+            return true;
+        }
     }
 }
