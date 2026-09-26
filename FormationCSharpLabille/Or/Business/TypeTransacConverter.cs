@@ -8,6 +8,7 @@ namespace Or.Business
     {
         private static readonly CultureInfo EuroCulture = new CultureInfo("fr-FR");
 
+        // Bien le convertisseur
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             Operation op = Tools.TypeTransaction(((Models.Transaction)value).Expediteur, ((Models.Transaction)value).Destinataire);
